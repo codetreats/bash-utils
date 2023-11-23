@@ -23,6 +23,10 @@ build_and_up() {
     docker-compose up --detach
 }
 
+pipeline_hostname() {
+    echo $HOST_HOSTNAME | cut -d "." -f1
+}
+
 assert_var() {
      MSG=$1
      VAR=$2
