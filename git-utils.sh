@@ -1,9 +1,13 @@
 #!/bin/bash
 set -e
 
-list_uncommitted_repos() {    
+list_uncommitted_repos() {
+    MAXDEPTH=$1
+    if [ "$MAXDEPTH" == "" ]; then
+        MAXDEPTH=2
+    fi
     BASEDIR=$(pwd)
-    for REPO in $(find . -type d -name ".git") ; do
+    for REPO in $(find . -maxdepth $MAXDEPTH -type d -name ".git") ; do
         REPONAME=${REPO::-4}
         cd $BASEDIR
         cd $REPONAME
