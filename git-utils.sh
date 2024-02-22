@@ -3,11 +3,6 @@ set -e
 
 list_uncommitted_repos() {    
     BASEDIR=$(pwd)
-    #for DIR in $@ ; do
-    #    cd $BASEDIR
-    #    cd $DIR
-    #    for REPO in 
-    #done
     for REPO in $(find . -type d -name ".git") ; do
         REPONAME=${REPO::-4}
         cd $BASEDIR
@@ -22,4 +17,4 @@ list_uncommitted_repos() {
     done
 }
 
-#list_uncommitted_repos $@
+"$@"
