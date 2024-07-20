@@ -4,10 +4,12 @@ set -e
 remove_container() {
     NAME=$1
     # remove old container
-    if [[ $(docker ps -q --filter "name=$NAME"  | wc -l) -gt 0 ]]
+    if [[ $(docker ps -a -q --filter "name=$NAME"  | wc -l) -gt 0 ]]
     then
         echo "Remove $NAME"
         docker rm -f $NAME
+    else
+        echo "Nothing removed -> $NAME doesn't exist"
     fi
 }
 
@@ -17,10 +19,16 @@ prune_images() {
 
 build_and_up() {
     TAG=$1
+    FILE=$2
     cd container
     docker build -t $TAG .
     cd ..
-    docker-compose up --detach
+    if [[ "$FILE" == "" ]]
+    then
+        docker-compose up --detach
+    else
+        docker-compose -f $FILE up --detach
+    fi
 }
 
 pipeline_hostname() {
